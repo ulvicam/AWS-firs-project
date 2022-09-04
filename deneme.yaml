@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  This Template launches an ec2 instance wiht a SG which enable SSH an HTTP
+Resources:
+  CFNInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-05fa00d4c63e32376
+      InstanceType: t2.micro
+      KeyName: firstkey
+      SecurityGroups:
+         - !Ref CNFSecGrup
+      Tags:
+         - Key: Name
+           Value: Web Server of Ulvi
+  
+  CNFSecGrup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SSH-HTTP # Required
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+   
